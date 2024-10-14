@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestión de cursos</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <div class="principal">
+      <h1 class="title">Gestión de cursos</h1>
+      <div class="agregar-cursos">
+        <h2>Agregar curso</h2>
+        <form action="" id="form-curso">
+          <label for="nombre-curso">Nombre del curso:</label><br />
+          <input type="text" id="nombre-curso" required/><br />
+          <label for="profesor-curso">Profesor:</label><br />
+          <input type="text" id="profesor-curso" required/><br />
+          <button type="submit">Agregar</button>
+        </form>
+      </div>
+      <div class="estudiante">
+        <h2>Agregar estudiantes</h2>
+        <form action="" id="form-estudiante">
+          <label for="nombre-estudiante">Nombre del estudiante:</label><br />
+          <input type="text" id="nombre-estudiante" required /><br />
+          <label for="edad-estudiante">Edad:</label><br />
+          <input type="number" id="edad-estudiante" required /><br />
+          <label for="nota-estudiante">Nota:</label><br />
+          <input type="number" id="nota-estudiante" required /><br />
+          <label for="curso-estudiante">Curso:</label><br />
+          <select id="curso-estudiante"></select
+          ><br />
+
+          <button type="submit">Agregar</button>
+        </form>
+        <div id="mensajeError" class="error">
+          <p id="errorText">Sin errores.</p>
+          <button id="close" onclick="document.getElementById('mensajeError').classList.remove('mostrar')">OK</button>
+        </div>
+      </div>
+      <h2 class="title" id="listitle">Lista de Cursos y Estudiantes</h2>
+      <div id="lista">
+        
+      </div>
+      <div class="search">
+        <label for="busqueda-estudiante"><strong>Buscar Estudiante por Nombre:</strong></label><br />
+        <input type="text" id="busqueda-estudiante" placeholder="Nombre del estudiante" /><br />
+        
+        <label for="busqueda-curso"><strong>Filtrar Cursos por Profesor:</strong></label><br />
+        <input type="text" id="busqueda-curso" placeholder="Nombre del profesor" /><br />
+        
+        <button id="ordenar-notas">Ordenar Estudiantes por Notas</button>
+        <button id="ordenar-edad">Ordenar Estudiantes por Edad</button>
+      </div>
+      
+       <div class="estadisticas">
+        <h2>Estadísticas Generales</h2>
+        <p><strong>Total de cursos:</strong> <span id="total-cursos">0</span></p>
+        <p><strong>Total de estudiantes:</strong> <span id="total-estudiantes">0</span></p>
+        <p><strong>Promedio general de todos los estudiantes:</strong> <span id="promedio-general">0</span></p>
+        <p><strong>Curso con mejor promedio:</strong> <span id="mejor-curso">N/A</span></p>
+      </div> 
+
+      <div class="exportacion">
+        <button id="export-json">Exportar a JSON</button>
+      </div>
+       
+      
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
