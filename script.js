@@ -21,7 +21,6 @@ class Curso {
 
   agregarEstudiante(estudiante) {
     this.estudiantes.push(estudiante);
-
   }
 
   listarEstudiantes() {
@@ -64,6 +63,7 @@ formCurso.addEventListener("submit", (e) => {
 
   mostrarCursos();
   calcularEstadisticas();
+  guardarEnLocalStorage();
 });
 
 // Evento para agregar un estudiante
@@ -92,6 +92,7 @@ formEstudiante.addEventListener("submit", (e) => {
 
     mostrarCursos();
     calcularEstadisticas();
+    guardarEnLocalStorage();
   }
 });
 
@@ -185,17 +186,20 @@ function mostrarCursos() {
 function editarEstudiante(cursoIndex, estudianteIndex) {
   const curso = cursos[cursoIndex];
   const estudiante = curso.estudiantes[estudianteIndex];
-  const nombre = prompt('Ingrese el nuevo nombre del estudiante:', estudiante.nombre);
-  const edad = prompt('Ingrese la nueva edad del estudiante:', estudiante.edad);
-  const nota = prompt('Ingrese la nueva nota del estudiante:', estudiante.nota);
-  
+  const nombre = prompt(
+    "Ingrese el nuevo nombre del estudiante:",
+    estudiante.nombre
+  );
+  const edad = prompt("Ingrese la nueva edad del estudiante:", estudiante.edad);
+  const nota = prompt("Ingrese la nueva nota del estudiante:", estudiante.nota);
+
   if (nombre && edad && nota && validarEdadYNota(edad, nota)) {
     estudiante.nombre = nombre;
     estudiante.edad = parseInt(edad);
     estudiante.nota = parseFloat(nota);
     mostrarCursos();
     calcularEstadisticas();
-
+    guardarEnLocalStorage();
   }
 }
 
@@ -205,6 +209,7 @@ function eliminarEstudiante(cursoIndex, estudianteIndex) {
   curso.estudiantes.splice(estudianteIndex, 1);
   mostrarCursos();
   calcularEstadisticas();
+  guardarEnLocalStorage();
 }
 
 // Función para eliminar un curso
@@ -213,6 +218,7 @@ function eliminarCurso(index) {
   actualizarCursosSelect();
   mostrarCursos();
   calcularEstadisticas();
+  guardarEnLocalStorage();
 }
 
 // Función para editar un curso
@@ -229,7 +235,7 @@ function editarCurso(index) {
     curso.profesor = profesor;
     mostrarCursos();
     calcularEstadisticas();
-
+    guardarEnLocalStorage();
   }
 }
 
@@ -274,7 +280,7 @@ function calcularEstadisticas() {
 
 // Exportar a JSON
 function exportarJSON() {
-  const dataStr = JSON.stringify(cursos, null, 2); // Convertir a JSON
+  const dataStr = JSON.stringify(cursos, null, 2);
   const blob = new Blob([dataStr], { type: "application/json" });
   const url = URL.createObjectURL(blob);
 
@@ -350,3 +356,39 @@ document.getElementById("busqueda-curso").addEventListener("input", () => {
     }
   });
 });
+
+function guardarEnLocalStorage() {
+  localStorage.setItem("cursos", JSON.stringify(cursos));
+}
+
+function cargarDatosDesdeLocalStorage() {
+  const cursosGuardados = localStorage.getItem("cursos");
+  if (cursosGuardados) {
+    json = JSON.parse(cursosGuardados);
+
+    for (let i = 0; i < json.length; i++) {
+      let estudiantes_aux = [];
+
+      let estudiantes = json[i]["estudiantes"];
+
+      for (let j = 0; j < estudiantes.length; j++) {
+        estudiantes_aux.push(
+          new Estudiante(
+            json[i].estudiantes[j].nombre,
+            json[i].estudiantes[j].edad,
+            json[i].estudiantes[j].nota
+          )
+        );
+      }
+
+      let curso_aux = new Curso(json[i]["nombre"], json[i]["profesor"]);
+
+      curso_aux.estudiantes = estudiantes_aux;
+
+      cursos.push(curso_aux);
+    }
+    mostrarCursos();
+    actualizarCursosSelect();
+  }
+}
+window.addEventListener("load", cargarDatosDesdeLocalStorage);
