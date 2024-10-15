@@ -143,7 +143,7 @@ function mostrarCursos() {
     listaCursos.appendChild(cursoDiv);
   });
 
-  // Agregar evento de eliminar curso
+  // Evento de eliminar curso
   listaCursos.querySelectorAll(".eliminar-curso").forEach((button) => {
     button.addEventListener("click", (e) => {
       const index = parseInt(e.target.getAttribute("data-index"));
@@ -151,7 +151,7 @@ function mostrarCursos() {
     });
   });
 
-  // Agregar evento de editar curso
+  // Evento de editar curso
   listaCursos.querySelectorAll(".editar-curso").forEach((button) => {
     button.addEventListener("click", (e) => {
       const index = parseInt(e.target.getAttribute("data-index"));
@@ -212,7 +212,7 @@ function eliminarEstudiante(cursoIndex, estudianteIndex) {
   guardarEnLocalStorage();
 }
 
-// Función para eliminar un curso
+// Función eliminar curso
 function eliminarCurso(index) {
   cursos.splice(index, 1);
   actualizarCursosSelect();
@@ -221,7 +221,7 @@ function eliminarCurso(index) {
   guardarEnLocalStorage();
 }
 
-// Función para editar un curso
+// Función editar curso
 function editarCurso(index) {
   const curso = cursos[index];
   const nombre = prompt("Ingrese el nuevo nombre del curso:", curso.nombre);
@@ -357,6 +357,7 @@ document.getElementById("busqueda-curso").addEventListener("input", () => {
   });
 });
 
+// LocalStorage
 function guardarEnLocalStorage() {
   localStorage.setItem("cursos", JSON.stringify(cursos));
 }
