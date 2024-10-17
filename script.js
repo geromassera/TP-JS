@@ -390,6 +390,23 @@ function cargarDatosDesdeLocalStorage() {
     }
     mostrarCursos();
     actualizarCursosSelect();
+    calcularEstadisticas();
   }
 }
 window.addEventListener("load", cargarDatosDesdeLocalStorage);
+
+// Ordenar estudiantes por nota
+document.getElementById('ordenar-notas').addEventListener('click', () => {
+  cursos.forEach(curso => {
+      curso.estudiantes.sort((a, b) => b.nota - a.nota);
+  });
+  mostrarCursos();
+});
+
+// Ordenar estudiantes por edad
+document.getElementById('ordenar-edad').addEventListener('click', () => {
+  cursos.forEach(curso => {
+      curso.estudiantes.sort((a, b) => b.edad - a.edad);
+  });
+  mostrarCursos();
+});
